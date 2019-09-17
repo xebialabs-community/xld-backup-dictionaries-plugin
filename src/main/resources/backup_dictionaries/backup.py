@@ -9,22 +9,28 @@
 #
 
 import sys
+import com.xebialabs.deployit.plugin.api.reflect.Type as Type
 
 working_directory=deployedApplication.environment.backupDictionariesDirectory
 if not repositoryService.exists(working_directory):
     raise Exception("{0} doesn't exist, please create it and re-run the step again".format(working_directory))
 target_directory = repositoryService.read(working_directory)
 task_id = context.getTask().getId()
-print "task_id {0}".format(task_id)
+print ("task_id {0}".format(task_id))
 new_folder = "{0}/{1}".format(target_directory,task_id)
 if repositoryService.exists(new_folder):
     repositoryService.delete(new_folder)
 
-repositoryService.copy(target_directory.id,new_folder)
+
+type = Type.valueOf('core.Directory')
+configuration_item = type.descriptor.newInstance(new_folder)
+print ("create new folder {0}".format(configuration_item))
+repositoryService.create([configuration_item])
+
 for d in dictionaries:
     dict_name = d.name
     new_id = "{0}/{1}".format(new_folder,d.name)
-    print "Backup {0} -> {1}".format(d.id,new_id)
+    print ("Backup {0} -> {1}".format(d.id,new_id))
     new_dictionary = repositoryService.copy(d.id,new_id)
 
 

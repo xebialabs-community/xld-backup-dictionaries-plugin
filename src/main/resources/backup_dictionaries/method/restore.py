@@ -22,31 +22,31 @@ def dict_compare(d1, d2):
 
 #print "THIS %s" % thisCi
 deployedApplication = repositoryService.read(thisCi.id)
-print deployedApplication
+print(deployedApplication)
 
 task_info = taskService.getSteps(params.taskId)
 print task_info.metadata
 metadata = task_info.metadata
 
 environment = repositoryService.read(deployedApplication.environment.id)
-print "Environment %s" % environment
+print("Environment %s" % environment)
 if not environment.id == metadata['environment_id']:
     raise Exception("The environment doesn't match '{0}' vs '{1}'".format(str(environment.id), metadata['environment_id']))
 
 version = repositoryService.read(deployedApplication.version.id)
-print "Version %s" % version
+print ("Version %s" % version)
 if not version.name == metadata['version']:
     raise Exception("The versionapplication doesn't match '{0}' vs '{1}'".format(version.name, metadata['version']))
 
 
 application = repositoryService.read(str(version.application))
-print "Application %s" % application
+print ("Application %s" % application)
 
 if not application.name == metadata['application']:
     raise Exception("The application doesn't match '{0}' vs '{1}'".format(application.name, metadata['application']))
 
 
-print "Dictionaries %s "% environment.dictionaries
+print ("Dictionaries %s "% environment.dictionaries)
 current_dictionaries = {}
 for ci in environment.dictionaries:
     current_dictionaries[ci.name]=ci
@@ -71,12 +71,12 @@ for r in result:
         #print "backup  values {0}".format(ci.entries)
         added, removed, modified, same = dict_compare(current_dict.entries, ci.entries)
         if len(added)>0 or len(removed) > 0 or len(modified) > 0:
-            print "The dictionary entries have been modified,overide the current entries with the entries of the backup"
-            print "added:    {0}".format(added)
-            print "removed:  {0}".format(removed)
-            print "modified: {0}".format(modified)
+            print ("The dictionary entries have been modified,overide the current entries with the entries of the backup")
+            print ("added:    {0}".format(added))
+            print ("removed:  {0}".format(removed))
+            print ("modified: {0}".format(modified))
             current_dict.entries = ci.entries
             repositoryService.update(current_dict.id, current_dict)
         else:
-            print "No modification in the entries, skip the update"
+            print ("No modification in the entries, skip the update")
 
