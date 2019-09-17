@@ -1,4 +1,4 @@
-# XL Deploy|Release Description|Interface plugin v1.0.0
+# XL Deploy Backup Dictionary plugin v1.0.0
 
 [![Build Status][xld-backup-dictionaries-plugin-travis-image]][xld-backup-dictionaries-plugin-travis-url]
 [![License: MIT][xld-backup-dictionaries-plugin-license-image]][xld-backup-dictionaries-plugin-license-url]
@@ -12,24 +12,34 @@
 
 ## Preface
 
-This document describes the functionality provided by the XL Deploy|Release Description|Interface plugin.
-
-See the [XL Deploy reference manual](https://docs.xebialabs.com/xl-deploy) for background information on XL Deploy and deployment automation concepts.  
-or  
-See the [XL Release reference manual](https://docs.xebialabs.com/xl-release) for background information on XL Release and release automation concepts.  
+This plugin allows to take a snapshopt of the current state of the dictionaries associated to the current environment. A control task allows to reapply the configuration of a previous deployment using the deployment task id.
 
 ## Overview
+At deployment time, an extra step is generated in the post plan to back up the dictionaries.
+A control task is now available on the deployed application to restore the dictionaries by providing the taskid the deployment used at the time. The taskid can be copied from the deployment report (in the detail of the executed task.)
 
 ## Requirements
 
-Note:  XLD or XLR version should not be lower than lowest supported version.  See <https://support.xebialabs.com/hc/en-us/articles/115003299946-Supported-XebiaLabs-product-versions>.
+Note:  XLD version should not be lower than lowest supported version.  See <https://support.xebialabs.com/hc/en-us/articles/115003299946-Supported-XebiaLabs-product-versions>.
 
 ## Installation
 
-* Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xld-backup-dictionaries-plugin/releases) into the `XL_DEPLOY|RELEASE_SERVER/plugins` directory.
-* Restart the XL Deploy|Release server.
+* Copy the latest XLD file from the [releases page](https://github.com/xebialabs-community/xld-backup-dictionaries-plugin/releases) into the `XL_DEPLOY/plugins` directory.
+* Restart the XL Deploy server.
 
-## Features/Usage/Types/Tasks
+## Features
+### Environment
+![environment](images/environment.png "Configure the backup directory for dictionaries")
 
-## References
+### Deployed Application
+![deployedapplication](images/deployedapplication.png "Trigger a backup of the dictionaries")
+
+### Deployment task
+![deploymenttask](images/deploymenttask.png "Generated Deplouyment Task")
+
+### Control Task
+![controltask-1](images/controltask-1.png "Control Task 1")
+![controltask-2](images/controltask-2.png "Control Task 2")
+
+
 
